@@ -24,5 +24,9 @@ pipe(double,double,increment,double)(5);
 // Here’s the async/await version of the pipe function.
 // This allows you to provide async/await functions inside of the pipe.
 const _pipe = (a, b) => async (arg) => b(await a(arg));
+//or
+const _pipe = (a, b) => (arg) => {
+  return Promise.resolve(a(arg)).then(resolve=>b(resolve));
+};
 const pipe = (...ops) => ops.reduce(_pipe);
 ```
