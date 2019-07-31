@@ -23,6 +23,6 @@ pipe(double,double,increment,double)(5);
 ```javascript
 // Here’s the async/await version of the pipe function.
 // This allows you to provide async/await functions inside of the pipe.
-const _pipe = async (a, b) => async (arg) => (a.then) ? await b(await (await a)(arg)) : await b(await a(arg));
-const pipe = async (...ops) => (await ops.reduce(_pipe))()
+const _pipe = (a, b) => async (arg) => b(await a(arg));
+const pipe = (...ops) => ops.reduce(_pipe);
 ```
