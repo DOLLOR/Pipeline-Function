@@ -26,7 +26,7 @@ pipe(double,double,increment,double)(5);
 const _pipe = (a, b) => async (arg) => b(await a(arg));
 //or
 const _pipe = (a, b) => (arg) => {
-  return Promise.resolve(a(arg)).then(resolve=>b(resolve));
+  return Promise.resolve(a(arg)).then(result=>b(result));
 };
 const pipe = (...ops) => ops.reduce(_pipe);
 ```
