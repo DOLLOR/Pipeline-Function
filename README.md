@@ -38,3 +38,18 @@ const pipe = (...ops) => ops.reduce(_pipe);
 const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
 const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
 ```
+```javascript
+// es3 version
+var pipe = function() {
+  var funcList = arguments;
+  return function(item){
+    var i;
+    var func;
+    for(i=0;i<funcList.length;i++){
+      func = funcList[i];
+      item = func(item);
+    }
+    return item;
+  };
+};
+```
