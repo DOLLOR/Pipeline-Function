@@ -2,6 +2,7 @@
 Pipeline function like Pipeline operator
 
 See: https://medium.com/@venomnert/pipe-function-in-javascript-8a22097a538e
+https://github.com/tc39/proposal-pipeline-operator
 
 ```javascript
 const _pipe = (a, b) => (arg) => b(a(arg));
