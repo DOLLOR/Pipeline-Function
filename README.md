@@ -30,3 +30,11 @@ const _pipe = (a, b) => (arg) => {
 };
 const pipe = (...ops) => ops.reduce(_pipe);
 ```
+
+```javascript
+// Another version, with just one line
+// from https://medium.com/javascript-scene/reduce-composing-software-fe22f0c39a1d
+// and https://www.freecodecamp.org/news/pipe-and-compose-in-javascript-5b04004ac937/
+const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
+const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
+```
