@@ -54,9 +54,21 @@ var pipe = function() {
   };
 };
 ```
-
+another way, with typescript support
 ```typescript
-// another way, with typescript support
+/**
+ * pipe function, like pipeline operator
+ * ```ts
+// without pipeline operator
+double(increment(double(double(5)))); // 42
+
+// with pipeline function
+pipe(5).to(double).to(double).to(increment).to(double).value; // 42
+
+// with pipeline operator
+5 |> double |> double |> increment |> double; // 42
+ * ```
+ */
 const pipe = <T>(value: T) => {
   return {
     value,
@@ -67,5 +79,5 @@ const pipe = <T>(value: T) => {
 const double = (n: number) => n * 2;
 const increment = (n: number) => n + 1;
 
-pipe(5).to(double).to(double).to(increment).to(double).to(console.log) // 42
+pipe(5).to(double).to(double).to(increment).to(double).value; // 42
 ```
