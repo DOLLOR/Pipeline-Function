@@ -70,11 +70,17 @@ pipe(5).to(double).to(double).to(increment).to(double).value; // 42
  * ```
  */
 const pipe = <T>(value: T) => {
-  return {
+  const obj: Pipe<T> = {
     value,
-    to: <S>(func: (obj: T) => S) => pipe(func(value)),
+    to: (func) => pipe(func(value))
   }
-};
+  return obj
+}
+
+interface Pipe<T> {
+  value: T
+  to: <S>(func: ((obj: T) => S)) => Pipe<S>
+}
 
 const double = (n: number) => n * 2;
 const increment = (n: number) => n + 1;
