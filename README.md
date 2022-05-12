@@ -54,3 +54,18 @@ var pipe = function() {
   };
 };
 ```
+
+```typescript
+// another way, with typescript support
+const pipe = <T>(value: T) => {
+  return {
+    value,
+    to: <S>(func: (obj: T) => S) => pipe(func(value)),
+  }
+};
+
+const double = (n: number) => n * 2;
+const increment = (n: number) => n + 1;
+
+pipe(5).to(double).to(double).to(increment).to(double).to(console.log) // 42
+```
