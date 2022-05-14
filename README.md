@@ -87,3 +87,35 @@ const increment = (n: number) => n + 1;
 
 pipe(5).to(double).to(double).to(increment).to(double).value; // 42
 ```
+
+python version, with typing
+```python
+import typing
+
+T = typing.TypeVar('T')
+class pipe(typing.Generic[T]):
+    """pipe function
+        ```py
+        # without pipeline operator
+        double(increment(double(double(5)))) # 42
+
+        # with pipeline function
+        pipe(5).to(double).to(double).to(increment).to(double).value # 42
+
+        # with pipeline operator
+        5 |> double |> double |> increment |> double; # 42
+        ```
+    """
+    value:T
+    def __init__(self,obj:T) -> None:
+        self.value = obj
+
+    S = typing.TypeVar('S')
+    def to(self,func:typing.Callable[[T],S]):
+        return pipe(func(self.value))
+
+def double(n:int): return n * 2
+def increment(n:int): return n + 1
+
+pipe(5).to(double).to(double).to(increment).to(double).to(hex).to(print)
+```
