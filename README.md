@@ -87,6 +87,37 @@ const increment = (n: number) => n + 1;
 
 pipe(5).to(double).to(double).to(increment).to(double).value; // 42
 ```
+typescript version 2
+```typescript
+/**
+ * pipe function, like pipeline operator
+ * ```ts
+// without pipeline operator
+double(increment(double(double(5)))); // 42
+
+// with pipeline function
+pipe(5)(double)(double)(increment)(double).value; // 42
+
+// with pipeline operator
+5 |> double |> double |> increment |> double; // 42
+ * ```
+ */
+const pipe = <T>(value: T) => {
+  const obj: Pipe<T> = (func) => pipe(func(value));
+  obj.value = value
+  return obj
+}
+
+interface Pipe<T> {
+  value: T
+  <S>(func: ((obj: T) => S)): Pipe<S>
+}
+
+const double = (n: number) => n * 2;
+const increment = (n: number) => n + 1;
+
+pipe(5)(double)(double)(increment)(double).value; // 42
+```
 
 python version, with typing
 ```python
