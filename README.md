@@ -1,6 +1,33 @@
 # Pipeline-Function
 Pipeline function like Pipeline operator
 
+javascript with jsdoc support
+```javascript
+// @ts-check
+
+/**
+ * @template T
+ * @typedef {{<S>(func:(value:T)=>S):Pipe<S>,to:<S>(func:(value:T)=>S)=>Pipe<S>,value:T}} Pipe
+ */
+
+/**
+ * @type {<T>(value:T)=>Pipe<T>}
+ */
+const pipe = (value) => {
+  /** @type {Pipe<typeof value>} */
+  const func = (func) => pipe(func(value))
+  func.to = (func) => pipe(func(value))
+  func.value = value
+  return func
+}
+
+pipe(/** @type {const} */({ a: 1, b: '2' }))
+  ((i) => i.b)
+  ((i) => i.charCodeAt(0))
+  ((i) => i.toString(16))
+  .value
+```
+
 with typescript support
 ```typescript
 /**
